@@ -33,10 +33,11 @@ return new class extends Migration
             $table->index('department_id');
             $table->index('sort_order');
 
+            // Using NO ACTION to prevent SQL Server cascade path conflicts
             $table->foreign('parent_id')
                   ->references('id')
                   ->on('sys_menus')
-                  ->onDelete('cascade');
+                  ->onDelete('no action');
 
             $table->foreign('department_id')
                   ->references('id')
