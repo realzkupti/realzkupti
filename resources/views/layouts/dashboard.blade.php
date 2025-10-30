@@ -62,7 +62,7 @@
             routes: {
                 login: '{{ route('login') }}',
                 dashboard: '{{ route('dashboard') }}',
-                logout: '{{ route('api.logout') }}',
+                logout: '{{ route('logout') }}',
                 admin: {
                     users: '{{ route('admin.users') }}',
                     menus: '{{ route('admin.menus') }}',

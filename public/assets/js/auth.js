@@ -53,28 +53,28 @@ class AuthManager {
      * Handle login
      */
     async login(formData) {
-        return await this.request('/api/auth/login', 'POST', formData);
+        return await this.request('/login', 'POST', formData);
     }
 
     /**
      * Handle registration
      */
     async register(formData) {
-        return await this.request('/api/auth/register', 'POST', formData);
+        return await this.request('/register', 'POST', formData);
     }
 
     /**
      * Handle logout
      */
     async logout() {
-        return await this.request('/api/auth/logout', 'POST');
+        return await this.request('/logout', 'POST');
     }
 
     /**
      * Handle forgot password
      */
     async forgotPassword(formData) {
-        return await this.request('/api/auth/forgot-password', 'POST', formData);
+        return await this.request('/forgot-password', 'POST', formData);
     }
 
     /**

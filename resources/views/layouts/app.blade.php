@@ -24,7 +24,7 @@
                 login: '{{ route('login') }}',
                 register: '{{ route('register') }}',
                 dashboard: '{{ route('dashboard') }}',
-                logout: '{{ route('api.logout') }}',
+                logout: '{{ route('logout') }}',
             }
         };
     </script>
