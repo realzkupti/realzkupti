@@ -64,8 +64,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="menuSort">Sort Order</label>
-                    <input type="number" id="menuSort" name="sort_order" class="form-input" value="0">
+                    <label class="form-label" for="menuSortOrder">Sort Order</label>
+                    <input type="number" id="menuSortOrder" name="sort_order" class="form-input" value="0">
                 </div>
             </div>
 
@@ -76,12 +76,7 @@
                 </label>
 
                 <label class="checkbox-wrapper">
-                    <input type="checkbox" id="menuSystem" name="is_system" value="1" class="checkbox-input">
-                    <span class="checkbox-label">System Menu (Cannot Delete)</span>
-                </label>
-
-                <label class="checkbox-wrapper">
-                    <input type="checkbox" id="menuSticky" name="has_sticky_note" value="1" class="checkbox-input">
+                    <input type="checkbox" id="menuStickyNote" name="has_sticky_note" value="1" class="checkbox-input">
                     <span class="checkbox-label">Enable Sticky Notes</span>
                 </label>
             </div>
@@ -99,7 +94,6 @@
 </div>
 
 @push('scripts')
-{{-- TODO: Implement admin-menus.js for menu management functionality --}}
-{{-- <script src="/assets/js/admin-menus.js?v={{ config('app.asset_version', '1.0.0') }}"></script> --}}
+<script src="/assets/js/admin-menus.js?v={{ config('app.asset_version', '1.0.0') }}"></script>
 @endpush
 @endsection
