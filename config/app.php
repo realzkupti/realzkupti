@@ -14,6 +14,17 @@ return [
     'key' => env('APP_KEY'),
     'cipher' => 'AES-256-CBC',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Asset Version
+    |--------------------------------------------------------------------------
+    |
+    | This value is used for cache busting on CSS and JS files.
+    | Increment this version when you update assets to force browser refresh.
+    |
+    */
+    'asset_version' => env('ASSET_VERSION', '1.0.0'),
+
     'providers' => [
         // Laravel Framework Service Providers
         Illuminate\Auth\AuthServiceProvider::class,

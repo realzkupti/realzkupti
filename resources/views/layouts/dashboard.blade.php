@@ -6,8 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Dashboard - TailAdmin Template')</title>
 
-    <!-- TailAdmin CSS -->
-    <link rel="stylesheet" href="/assets/css/tailadmin.css">
+    <!-- TailAdmin CSS with cache busting -->
+    <link rel="stylesheet" href="/assets/css/tailadmin.css?v={{ config('app.asset_version', '1.0.0') }}">
 
     @stack('styles')
 </head>
@@ -53,8 +53,29 @@
         </div>
     </div>
 
-    <!-- TailAdmin JavaScript -->
-    <script src="/assets/js/auth.js"></script>
+    <!-- Global App Config for JavaScript -->
+    <script>
+        window.App = {
+            baseUrl: '{{ url('/') }}',
+            apiUrl: '{{ url('/api') }}',
+            csrfToken: '{{ csrf_token() }}',
+            routes: {
+                login: '{{ route('login') }}',
+                dashboard: '{{ route('dashboard') }}',
+                logout: '{{ route('api.logout') }}',
+                admin: {
+                    users: '{{ route('admin.users') }}',
+                    menus: '{{ route('admin.menus') }}',
+                    departments: '{{ route('admin.departments') }}',
+                    companies: '{{ route('admin.companies') }}',
+                    branches: '{{ route('admin.branches') }}',
+                }
+            }
+        };
+    </script>
+
+    <!-- TailAdmin JavaScript with cache busting -->
+    <script src="/assets/js/auth.js?v={{ config('app.asset_version', '1.0.0') }}"></script>
 
     <script>
     async function handleLogout(event) {

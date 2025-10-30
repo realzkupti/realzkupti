@@ -6,16 +6,31 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'TailAdmin Template')</title>
 
-    <!-- TailAdmin CSS -->
-    <link rel="stylesheet" href="/assets/css/tailadmin.css">
+    <!-- TailAdmin CSS with cache busting -->
+    <link rel="stylesheet" href="/assets/css/tailadmin.css?v={{ config('app.asset_version', '1.0.0') }}">
 
     @stack('styles')
 </head>
 <body>
     @yield('content')
 
-    <!-- TailAdmin JavaScript -->
-    <script src="/assets/js/auth.js"></script>
+    <!-- Global App Config for JavaScript -->
+    <script>
+        window.App = {
+            baseUrl: '{{ url('/') }}',
+            apiUrl: '{{ url('/api') }}',
+            csrfToken: '{{ csrf_token() }}',
+            routes: {
+                login: '{{ route('login') }}',
+                register: '{{ route('register') }}',
+                dashboard: '{{ route('dashboard') }}',
+                logout: '{{ route('api.logout') }}',
+            }
+        };
+    </script>
+
+    <!-- TailAdmin JavaScript with cache busting -->
+    <script src="/assets/js/auth.js?v={{ config('app.asset_version', '1.0.0') }}"></script>
 
     @stack('scripts')
 </body>
