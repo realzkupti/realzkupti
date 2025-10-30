@@ -73,6 +73,14 @@ class Company extends Model
     }
 
     /**
+     * Get the branches for this company.
+     */
+    public function branches()
+    {
+        return $this->hasMany(Branch::class, 'company_id')->orderBy('sort_order');
+    }
+
+    /**
      * Get the sticky notes for this company.
      */
     public function stickyNotes()
