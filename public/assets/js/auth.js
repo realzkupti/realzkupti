@@ -88,7 +88,7 @@ class AuthManager {
      * Update profile
      */
     async updateProfile(formData) {
-        return await this.request('/api/auth/update-profile', 'PUT', formData);
+        return await this.request('/profile', 'PUT', formData);
     }
 
     /**

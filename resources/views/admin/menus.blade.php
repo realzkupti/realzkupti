@@ -99,6 +99,7 @@
 </div>
 
 @push('scripts')
-<script src="/assets/js/admin-menus.js"></script>
+{{-- TODO: Implement admin-menus.js for menu management functionality --}}
+{{-- <script src="/assets/js/admin-menus.js?v={{ config('app.asset_version', '1.0.0') }}"></script> --}}
 @endpush
 @endsection

@@ -63,6 +63,7 @@
 </div>
 
 @push('scripts')
-<script src="/assets/js/admin-departments.js"></script>
+{{-- TODO: Implement admin-departments.js for department management functionality --}}
+{{-- <script src="/assets/js/admin-departments.js?v={{ config('app.asset_version', '1.0.0') }}"></script> --}}
 @endpush
 @endsection

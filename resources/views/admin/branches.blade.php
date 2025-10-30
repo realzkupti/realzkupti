@@ -97,6 +97,7 @@
 </div>
 
 @push('scripts')
-<script src="/assets/js/admin-branches.js"></script>
+{{-- TODO: Implement admin-branches.js for branch management functionality --}}
+{{-- <script src="/assets/js/admin-branches.js?v={{ config('app.asset_version', '1.0.0') }}"></script> --}}
 @endpush
 @endsection

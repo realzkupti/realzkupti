@@ -100,6 +100,7 @@
 </div>
 
 @push('scripts')
-<script src="/assets/js/admin-companies.js"></script>
+{{-- TODO: Implement admin-companies.js for company management functionality --}}
+{{-- <script src="/assets/js/admin-companies.js?v={{ config('app.asset_version', '1.0.0') }}"></script> --}}
 @endpush
 @endsection

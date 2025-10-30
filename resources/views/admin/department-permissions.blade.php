@@ -54,9 +54,10 @@
 </div>
 
 @push('scripts')
-<script src="/assets/js/admin-permissions.js"></script>
+{{-- TODO: Implement admin-permissions.js for permission management functionality --}}
+{{-- <script src="/assets/js/admin-permissions.js?v={{ config('app.asset_version', '1.0.0') }}"></script>
 <script>
     const permissionType = 'department';
-</script>
+</script> --}}
 @endpush
 @endsection
