@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             DepartmentSeeder::class,
             MenuSeeder::class,
             UserSeeder::class,
+            DepartmentPermissionSeeder::class, // Must run after MenuSeeder
         ]);
     }
 }
