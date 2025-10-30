@@ -2,13 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\StickyNoteController;
 
 /*
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
 |
-| All authentication endpoints use JavaScript/AJAX instead of traditional PHP POST
+| All authentication endpoints use fetch API instead of traditional PHP POST
 |
 */
 
@@ -25,4 +26,14 @@ Route::prefix('auth')->group(function () {
         Route::get('/user', [AuthController::class, 'user'])->name('api.user');
         Route::put('/update-profile', [AuthController::class, 'updateProfile'])->name('api.update-profile');
     });
+});
+
+// Sticky Notes API (Protected)
+Route::middleware('auth')->prefix('sticky-notes')->group(function () {
+    Route::get('/', [StickyNoteController::class, 'index'])->name('api.sticky-notes.index');
+    Route::post('/', [StickyNoteController::class, 'store'])->name('api.sticky-notes.store');
+    Route::put('/{id}', [StickyNoteController::class, 'update'])->name('api.sticky-notes.update');
+    Route::delete('/{id}', [StickyNoteController::class, 'destroy'])->name('api.sticky-notes.destroy');
+    Route::post('/{id}/restore', [StickyNoteController::class, 'restore'])->name('api.sticky-notes.restore');
+    Route::post('/bulk-update', [StickyNoteController::class, 'bulkUpdate'])->name('api.sticky-notes.bulk-update');
 });
