@@ -40,15 +40,16 @@ return new class extends Migration
                   ->on('sys_menus')
                   ->onDelete('cascade');
 
+            // Using NO ACTION to prevent SQL Server cascade path conflicts
             $table->foreign('created_by')
                   ->references('id')
                   ->on('sys_users')
-                  ->onDelete('set null');
+                  ->onDelete('no action');
 
             $table->foreign('updated_by')
                   ->references('id')
                   ->on('sys_users')
-                  ->onDelete('set null');
+                  ->onDelete('no action');
         });
 
         // User Menu Permissions
@@ -80,15 +81,16 @@ return new class extends Migration
                   ->on('sys_menus')
                   ->onDelete('cascade');
 
+            // Using NO ACTION to prevent SQL Server cascade path conflicts
             $table->foreign('created_by')
                   ->references('id')
                   ->on('sys_users')
-                  ->onDelete('set null');
+                  ->onDelete('no action');
 
             $table->foreign('updated_by')
                   ->references('id')
                   ->on('sys_users')
-                  ->onDelete('set null');
+                  ->onDelete('no action');
         });
     }
 

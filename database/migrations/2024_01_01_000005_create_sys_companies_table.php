@@ -32,15 +32,16 @@ return new class extends Migration
 
             $table->index('key');
 
+            // Using NO ACTION to prevent SQL Server cascade path conflicts
             $table->foreign('created_by')
                   ->references('id')
                   ->on('sys_users')
-                  ->onDelete('set null');
+                  ->onDelete('no action');
 
             $table->foreign('updated_by')
                   ->references('id')
                   ->on('sys_users')
-                  ->onDelete('set null');
+                  ->onDelete('no action');
         });
     }
 

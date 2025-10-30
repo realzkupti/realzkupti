@@ -40,29 +40,31 @@ return new class extends Migration
         });
 
         // Add foreign keys for created_by and updated_by
+        // Using NO ACTION to prevent SQL Server cascade path conflicts
         Schema::table('sys_users', function (Blueprint $table) {
             $table->foreign('created_by')
                   ->references('id')
                   ->on('sys_users')
-                  ->onDelete('set null');
+                  ->onDelete('no action');
 
             $table->foreign('updated_by')
                   ->references('id')
                   ->on('sys_users')
-                  ->onDelete('set null');
+                  ->onDelete('no action');
         });
 
         // Add foreign keys to sys_departments
+        // Using NO ACTION to prevent SQL Server cascade path conflicts
         Schema::table('sys_departments', function (Blueprint $table) {
             $table->foreign('created_by')
                   ->references('id')
                   ->on('sys_users')
-                  ->onDelete('set null');
+                  ->onDelete('no action');
 
             $table->foreign('updated_by')
                   ->references('id')
                   ->on('sys_users')
-                  ->onDelete('set null');
+                  ->onDelete('no action');
         });
     }
 
