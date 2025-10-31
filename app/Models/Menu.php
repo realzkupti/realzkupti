@@ -32,7 +32,6 @@ class Menu extends Model
         'department_id',
         'is_active',
         'is_system',
-        'has_sticky_note',
         'created_by',
         'updated_by',
     ];
@@ -45,7 +44,6 @@ class Menu extends Model
     protected $casts = [
         'is_active' => 'boolean',
         'is_system' => 'boolean',
-        'has_sticky_note' => 'boolean',
         'sort_order' => 'integer',
     ];
 
@@ -91,14 +89,6 @@ class Menu extends Model
     public function userPermissions()
     {
         return $this->hasMany(UserMenuPermission::class, 'menu_id');
-    }
-
-    /**
-     * Get the sticky notes for the menu.
-     */
-    public function stickyNotes()
-    {
-        return $this->hasMany(StickyNote::class, 'menu_id');
     }
 
     /**

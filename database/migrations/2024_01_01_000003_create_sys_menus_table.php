@@ -23,7 +23,6 @@ return new class extends Migration
             $table->unsignedBigInteger('department_id')->nullable();
             $table->boolean('is_active')->default(true);
             $table->boolean('is_system')->default(false);
-            $table->boolean('has_sticky_note')->default(false);
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

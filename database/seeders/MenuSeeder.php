@@ -27,7 +27,6 @@ class MenuSeeder extends Seeder
                 'department_id' => $systemDept->id,
                 'is_active' => true,
                 'is_system' => true,
-                'has_sticky_note' => true,
             ],
 
             // Admin Menu (Parent)
@@ -41,7 +40,6 @@ class MenuSeeder extends Seeder
                 'department_id' => $systemDept->id,
                 'is_active' => true,
                 'is_system' => true,
-                'has_sticky_note' => false,
             ],
         ];
 
@@ -53,7 +51,7 @@ class MenuSeeder extends Seeder
                 $subMenus = [
                     [
                         'key' => 'admin.users',
-                        'label' => 'ผู้ใช้งาน',
+                        'label' => 'จัดการผู้ใช้งาน',
                         'icon' => 'users',
                         'route' => 'admin.users',
                         'parent_id' => $menu->id,
@@ -61,11 +59,10 @@ class MenuSeeder extends Seeder
                         'department_id' => $systemDept->id,
                         'is_active' => true,
                         'is_system' => true,
-                        'has_sticky_note' => false,
                     ],
                     [
                         'key' => 'admin.departments',
-                        'label' => 'แผนก',
+                        'label' => 'จัดการแผนก',
                         'icon' => 'briefcase',
                         'route' => 'admin.departments',
                         'parent_id' => $menu->id,
@@ -73,11 +70,10 @@ class MenuSeeder extends Seeder
                         'department_id' => $systemDept->id,
                         'is_active' => true,
                         'is_system' => true,
-                        'has_sticky_note' => false,
                     ],
                     [
                         'key' => 'admin.menus',
-                        'label' => 'เมนู',
+                        'label' => 'จัดการเมนู',
                         'icon' => 'menu',
                         'route' => 'admin.menus',
                         'parent_id' => $menu->id,
@@ -85,11 +81,10 @@ class MenuSeeder extends Seeder
                         'department_id' => $systemDept->id,
                         'is_active' => true,
                         'is_system' => true,
-                        'has_sticky_note' => false,
                     ],
                     [
-                        'key' => 'admin.permissions',
-                        'label' => 'สิทธิ์การใช้งาน',
+                        'key' => 'admin.permissions.departments',
+                        'label' => 'สิทธิ์ตามแผนก',
                         'icon' => 'shield',
                         'route' => 'admin.permissions.departments',
                         'parent_id' => $menu->id,
@@ -97,31 +92,17 @@ class MenuSeeder extends Seeder
                         'department_id' => $systemDept->id,
                         'is_active' => true,
                         'is_system' => true,
-                        'has_sticky_note' => false,
                     ],
                     [
-                        'key' => 'admin.companies',
-                        'label' => 'บริษัท',
-                        'icon' => 'building',
-                        'route' => 'admin.companies',
+                        'key' => 'admin.permissions.users',
+                        'label' => 'สิทธิ์ตามผู้ใช้',
+                        'icon' => 'user-check',
+                        'route' => 'admin.permissions.users',
                         'parent_id' => $menu->id,
                         'sort_order' => 5,
                         'department_id' => $systemDept->id,
                         'is_active' => true,
                         'is_system' => true,
-                        'has_sticky_note' => false,
-                    ],
-                    [
-                        'key' => 'admin.branches',
-                        'label' => 'สาขา',
-                        'icon' => 'map-pin',
-                        'route' => 'admin.branches',
-                        'parent_id' => $menu->id,
-                        'sort_order' => 6,
-                        'department_id' => $systemDept->id,
-                        'is_active' => true,
-                        'is_system' => true,
-                        'has_sticky_note' => false,
                     ],
                 ];
 

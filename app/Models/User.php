@@ -80,23 +80,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the companies that the user has access to.
-     */
-    public function companies()
-    {
-        return $this->belongsToMany(Company::class, 'sys_user_company_access', 'user_id', 'company_id')
-                    ->withTimestamps();
-    }
-
-    /**
-     * Get the sticky notes for the user.
-     */
-    public function stickyNotes()
-    {
-        return $this->hasMany(StickyNote::class);
-    }
-
-    /**
      * Get the user who created this record.
      */
     public function creator()

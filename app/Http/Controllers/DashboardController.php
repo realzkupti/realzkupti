@@ -65,17 +65,12 @@ class DashboardController extends Controller
             })->values()->toArray();
         })->toArray();
 
-        // Provide default stats data
+        // Provide basic stats data
         $stats = [
             'users_total' => \App\Models\User::count(),
             'users_active' => \App\Models\User::where('is_active', true)->count(),
-            'cheques' => 0, // Will be implemented later
-            'companies_total' => 0, // Will be implemented later
-            'companies_active' => 0, // Will be implemented later
-            'views' => 0,
-            'profit' => 0,
-            'products' => 0,
-            'users' => \App\Models\User::count(),
+            'departments' => \App\Models\Department::count(),
+            'menus' => \App\Models\Menu::count(),
         ];
 
         $activities = []; // Will be implemented later
@@ -88,6 +83,6 @@ class DashboardController extends Controller
      */
     public function profile()
     {
-        return view('profile');
+        return view('tailadmin.pages.profile');
     }
 }

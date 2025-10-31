@@ -7,8 +7,6 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\Admin\CompanyController;
-use App\Http\Controllers\Admin\BranchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,20 +71,5 @@ Route::middleware('auth')->group(function () {
         Route::get('/permissions/users', [PermissionController::class, 'userIndex'])->name('permissions.users');
         Route::get('/permissions/users/{id}', [PermissionController::class, 'getUserPermissions'])->name('permissions.users.get');
         Route::post('/permissions/users/{id}', [PermissionController::class, 'saveUserPermissions'])->name('permissions.users.save');
-
-        // Companies
-        Route::get('/companies', [CompanyController::class, 'index'])->name('companies');
-        Route::get('/companies/list', [CompanyController::class, 'list'])->name('companies.list');
-        Route::post('/companies', [CompanyController::class, 'store'])->name('companies.store');
-        Route::put('/companies/{id}', [CompanyController::class, 'update'])->name('companies.update');
-        Route::delete('/companies/{id}', [CompanyController::class, 'destroy'])->name('companies.destroy');
-        Route::post('/companies/test-connection', [CompanyController::class, 'testConnection'])->name('companies.test-connection');
-
-        // Branches
-        Route::get('/branches', [BranchController::class, 'index'])->name('branches');
-        Route::get('/branches/list', [BranchController::class, 'list'])->name('branches.list');
-        Route::post('/branches', [BranchController::class, 'store'])->name('branches.store');
-        Route::put('/branches/{id}', [BranchController::class, 'update'])->name('branches.update');
-        Route::delete('/branches/{id}', [BranchController::class, 'destroy'])->name('branches.destroy');
     });
 });
