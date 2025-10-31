@@ -6,8 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'TailAdmin Template')</title>
 
-    <!-- TailAdmin CSS with cache busting -->
-    <link rel="stylesheet" href="/assets/css/tailadmin.css?v={{ config('app.asset_version', '1.0.0') }}">
+    <!-- Vite Assets -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @stack('styles')
 </head>
@@ -29,8 +29,8 @@
         };
     </script>
 
-    <!-- TailAdmin JavaScript with cache busting -->
-    <script src="/assets/js/auth.js?v={{ config('app.asset_version', '1.0.0') }}"></script>
+    <!-- Legacy Auth JS (will be migrated to Vite) -->
+    <script src="/assets/js/auth.js"></script>
 
     @stack('scripts')
 </body>
