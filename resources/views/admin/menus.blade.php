@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('tailadmin.layouts.app')
 
 @section('title', 'Menu Management - TailAdmin')
 

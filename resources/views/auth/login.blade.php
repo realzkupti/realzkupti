@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('tailadmin.layouts.auth')
 
 @section('title', 'Login - TailAdmin Template')
 
