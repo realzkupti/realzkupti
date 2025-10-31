@@ -104,12 +104,3 @@ window.throttle = function(func, limit) {
         }
     };
 };
-
-// Export for module usage
-export {
-    copyToClipboard,
-    formatDate,
-    formatCurrency,
-    debounce,
-    throttle
-};
