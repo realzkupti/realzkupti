@@ -1,17 +1,57 @@
+# Dependencies
 /node_modules
+/vendor
+
+# Laravel & Vite
 /public/hot
 /public/storage
+/public/build
 /storage/*.key
-/vendor
+
+# Cache & Logs
+/bootstrap/cache/*
+!/bootstrap/cache/.gitkeep
+/storage/logs/*
+!/storage/logs/.gitkeep
+/storage/framework/cache/data/*
+!/storage/framework/cache/data/.gitkeep
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitkeep
+/storage/framework/views/*
+!/storage/framework/views/.gitkeep
+
+# Environment & Config
 .env
 .env.backup
 .env.production
 .phpunit.result.cache
-Homestead.json
-Homestead.yaml
-auth.json
-npm-debug.log
-yarn-error.log
+
+# IDE
 /.fleet
 /.idea
 /.vscode
+
+# Homestead
+Homestead.json
+Homestead.yaml
+auth.json
+
+# NPM & Yarn
+npm-debug.log
+yarn-error.log
+yarn.lock
+package-lock.json
+
+# OS Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Testing
+/coverage
+/.phpunit.cache
+
+# Build artifacts
+/public/mix-manifest.json
