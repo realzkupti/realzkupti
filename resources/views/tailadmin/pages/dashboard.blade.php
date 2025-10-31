@@ -17,136 +17,84 @@
         </nav>
     </div>
 
-    <!-- Summary Cards (new) -->
+    <!-- Summary Cards -->
     <div class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
             <div class="text-sm text-gray-500 dark:text-gray-400">ผู้ใช้งาน (ทั้งหมด / เปิดใช้งาน)</div>
-            <div class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{{ $stats['users_total'] ?? 0 }}<span class="text-base font-semibold text-gray-500 dark:text-gray-400"> / {{ $stats['users_active'] ?? 0 }}</span></div>
+            <div class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
+                {{ $stats['users_total'] ?? 0 }}
+                <span class="text-base font-semibold text-gray-500 dark:text-gray-400"> / {{ $stats['users_active'] ?? 0 }}</span>
+            </div>
         </div>
         <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-            <div class="text-sm text-gray-500 dark:text-gray-400">เช็ค (ฉบับ)</div>
-            <div class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{{ $stats['cheques'] ?? 0 }}</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">แผนก</div>
+            <div class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{{ $stats['departments'] ?? 0 }}</div>
         </div>
         <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-            <div class="text-sm text-gray-500 dark:text-gray-400">บริษัทที่ตั้งค่า (ทั้งหมด)</div>
-            <div class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{{ $stats['companies_total'] ?? 0 }}</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">เมนู</div>
+            <div class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{{ $stats['menus'] ?? 0 }}</div>
         </div>
         <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-            <div class="text-sm text-gray-500 dark:text-gray-400">บริษัทที่เปิดใช้งาน</div>
-            <div class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{{ $stats['companies_active'] ?? 0 }}</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">สถานะระบบ</div>
+            <div class="mt-2 text-xl font-bold text-green-600 dark:text-green-400">ทำงานปกติ</div>
         </div>
     </div>
 
-    <!-- Company Selection & Settings -->
-    <div class="mb-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
-        <!-- Company Selector -->
+    <!-- Quick Links -->
+    <div class="mb-6">
         <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">เลือกบริษัท/ฐานข้อมูล</h3>
-
-            @if(session('status'))
-                <div class="mb-4 rounded bg-green-50 p-3 text-sm text-green-800 dark:bg-green-900/20 dark:text-green-400">
-                    {{ session('status') }}
-                </div>
-            @endif
-            @if(session('error'))
-                <div class="mb-4 rounded bg-red-50 p-3 text-sm text-red-800 dark:bg-red-900/20 dark:text-red-400">
-                    {{ session('error') }}
-                </div>
-            @endif
-
-            <form method="get">
-                <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">บริษัท</label>
-                <select
-                    name="company"
-                    class="w-full rounded border border-gray-300 bg-transparent px-4 py-2.5 outline-none focus:border-brand-500 dark:border-gray-700 dark:focus:border-brand-500"
-                    onchange="this.form.submit()"
-                >
-                    @php
-                        $companies = $companies ?? \App\Services\CompanyManager::listCompanies();
-                        $selectedCompany = $selectedCompany ?? \App\Services\CompanyManager::getSelectedKey();
-                    @endphp
-                    @foreach(($companies ?? []) as $key => $c)
-                        @php $label = is_array($c) ? ($c['label'] ?? $key) : $key; @endphp
-                        <option value="{{ $key }}" {{ ($selectedCompany === $key) ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
-            </form>
-
-            <div class="mt-4 rounded bg-blue-50 p-3 dark:bg-blue-900/20">
-                <p class="text-xs text-blue-800 dark:text-blue-300">
-                    <strong>ปัจจุบัน:</strong> {{ is_array($companies[$selectedCompany] ?? null) ? ($companies[$selectedCompany]['label'] ?? $selectedCompany) : $selectedCompany }}
-                </p>
-            </div>
-        </div>
-
-        <!-- Quick Links -->
-        <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 lg:col-span-2">
             <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">เมนูด่วน</h3>
 
-            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <a
-                    href="{{ route('trial-balance.branch') }}"
-                    class="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition-colors hover:border-brand-500 hover:bg-brand-50 dark:border-gray-700 dark:hover:border-brand-500 dark:hover:bg-brand-900/20"
-                >
-                    <svg class="h-8 w-8 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15M9 5C9 6.10457 9.89543 7 11 7H13C14.1046 7 15 6.10457 15 5M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5M12 12H15M12 16H15M9 12H9.01M9 16H9.01"/>
-                    </svg>
-                    <div>
-                        <div class="font-semibold text-gray-900 dark:text-white">งบทดลอง (แยกสาขา)</div>
-                        <div class="text-xs text-gray-600 dark:text-gray-400">ดูงบทดลองแยกตามสาขา</div>
-                    </div>
-                </a>
-                <a
-                    href="{{ route('trial-balance.plain') }}"
-                    class="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition-colors hover:border-brand-500 hover:bg-brand-50 dark:border-gray-700 dark:hover:border-brand-500 dark:hover:bg-brand-900/20"
-                >
-                    <svg class="h-8 w-8 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6C4 4.895 4.895 4 6 4H18C19.105 4 20 4.895 20 6V18C20 19.105 19.105 20 18 20H6C4.895 20 4 19.105 4 18V6Z M8 8H16M8 12H16M8 16H12"/>
-                    </svg>
-                    <div>
-                        <div class="font-semibold text-gray-900 dark:text-white">งบทดลอง (แบบธรรมดา)</div>
-                        <div class="text-xs text-gray-600 dark:text-gray-400">เวอร์ชันเรนเดอร์ฝั่งเซิร์ฟเวอร์</div>
-                    </div>
-                </a>
-
-                <a
-                    href="{{ route('cheque.print') }}"
-                    class="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition-colors hover:border-brand-500 hover:bg-brand-50 dark:border-gray-700 dark:hover:border-brand-500 dark:hover:bg-brand-900/20"
-                >
-                    <svg class="h-8 w-8 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10H21M7 15H8M12 15H13M6 19H18C19.6569 19 21 17.6569 21 16V8C21 6.34315 19.6569 5 18 5H6C4.34315 5 3 6.34315 3 8V16C3 17.6569 4.34315 19 6 19Z"/>
-                    </svg>
-                    <div>
-                        <div class="font-semibold text-gray-900 dark:text-white">พิมพ์เช็ค</div>
-                        <div class="text-xs text-gray-600 dark:text-gray-400">พิมพ์และจัดการเช็ค</div>
-                    </div>
-                </a>
-
-                <a
-                    href="#settings-section"
-                    onclick="document.getElementById('settings-section').scrollIntoView({behavior: 'smooth'})"
-                    class="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition-colors hover:border-brand-500 hover:bg-brand-50 dark:border-gray-700 dark:hover:border-brand-500 dark:hover:bg-brand-900/20"
-                >
-                    <svg class="h-8 w-8 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                    </svg>
-                    <div>
-                        <div class="font-semibold text-gray-900 dark:text-white">ตั้งค่าบริษัท</div>
-                        <div class="text-xs text-gray-600 dark:text-gray-400">จัดการการเชื่อมต่อฐานข้อมูล</div>
-                    </div>
-                </a>
-
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <a
                     href="{{ route('admin.users') }}"
                     class="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition-colors hover:border-brand-500 hover:bg-brand-50 dark:border-gray-700 dark:hover:border-brand-500 dark:hover:bg-brand-900/20"
                 >
-                    <svg class="h-8 w-8 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="h-8 w-8 text-brand-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13M16 3.13C16.8604 3.3503 17.623 3.8507 18.1676 4.55231C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89317 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z"/>
                     </svg>
                     <div>
                         <div class="font-semibold text-gray-900 dark:text-white">จัดการผู้ใช้</div>
-                        <div class="text-xs text-gray-600 dark:text-gray-400">จัดการผู้ใช้และสิทธิ์</div>
+                        <div class="text-xs text-gray-600 dark:text-gray-400">จัดการผู้ใช้งานระบบ</div>
+                    </div>
+                </a>
+
+                <a
+                    href="{{ route('admin.departments') }}"
+                    class="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition-colors hover:border-brand-500 hover:bg-brand-50 dark:border-gray-700 dark:hover:border-brand-500 dark:hover:bg-brand-900/20"
+                >
+                    <svg class="h-8 w-8 text-brand-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                    </svg>
+                    <div>
+                        <div class="font-semibold text-gray-900 dark:text-white">จัดการแผนก</div>
+                        <div class="text-xs text-gray-600 dark:text-gray-400">จัดการแผนกงาน</div>
+                    </div>
+                </a>
+
+                <a
+                    href="{{ route('admin.menus') }}"
+                    class="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition-colors hover:border-brand-500 hover:bg-brand-50 dark:border-gray-700 dark:hover:border-brand-500 dark:hover:bg-brand-900/20"
+                >
+                    <svg class="h-8 w-8 text-brand-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <div>
+                        <div class="font-semibold text-gray-900 dark:text-white">จัดการเมนู</div>
+                        <div class="text-xs text-gray-600 dark:text-gray-400">จัดการเมนูระบบ</div>
+                    </div>
+                </a>
+
+                <a
+                    href="{{ route('admin.permissions.departments') }}"
+                    class="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition-colors hover:border-brand-500 hover:bg-brand-50 dark:border-gray-700 dark:hover:border-brand-500 dark:hover:bg-brand-900/20"
+                >
+                    <svg class="h-8 w-8 text-brand-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                    <div>
+                        <div class="font-semibold text-gray-900 dark:text-white">จัดการสิทธิ์</div>
+                        <div class="text-xs text-gray-600 dark:text-gray-400">จัดการสิทธิ์การใช้งาน</div>
                     </div>
                 </a>
             </div>
@@ -309,59 +257,6 @@
                         <p class="text-sm text-gray-600 dark:text-gray-400">ยังไม่มีกิจกรรม</p>
                     </div>
                     @endif
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Company Settings (JSON Configuration) -->
-    <div class="mt-6" id="settings-section">
-        <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">ตั้งค่าบริษัท (JSON Configuration)</h3>
-
-            <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-                แก้ไข JSON สำหรับกำหนดบริษัทและการเชื่อมต่อฐานข้อมูล สามารถใช้ <code class="rounded bg-gray-100 px-1 py-0.5 dark:bg-gray-800">${'{ENV_VAR}'}</code> เพื่ออ้างอิงตัวแปร .env
-            </p>
-
-            <form method="post" action="{{ route('settings.companies.save') }}">
-                @csrf
-                <div class="mb-4">
-                    <textarea
-                        name="companies_json"
-                        class="w-full rounded border border-gray-300 bg-transparent p-4 font-mono text-sm outline-none focus:border-brand-500 dark:border-gray-700 dark:focus:border-brand-500"
-                        rows="15"
-                    >{{ $companiesJson ?? file_get_contents(base_path('config/companies.json')) }}</textarea>
-                </div>
-
-                <div class="flex items-center gap-3">
-                    <button
-                        type="submit"
-                        class="rounded bg-brand-500 px-6 py-2.5 text-white hover:bg-brand-600"
-                    >
-                        บันทึกการตั้งค่า
-                    </button>
-
-                    <button
-                        type="button"
-                        onclick="if(confirm('คุณต้องการรีเฟรชหน้าเพื่อโหลดค่าเดิมหรือไม่?')) location.reload()"
-                        class="rounded border border-gray-300 px-6 py-2.5 hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800"
-                    >
-                        ยกเลิก
-                    </button>
-                </div>
-            </form>
-
-            <div class="mt-4 rounded border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-900/50 dark:bg-yellow-900/20">
-                <div class="flex items-start gap-3">
-                    <svg class="h-5 w-5 text-yellow-600 dark:text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"/>
-                    </svg>
-                    <div>
-                        <p class="text-sm font-medium text-yellow-800 dark:text-yellow-200">คำเตือน</p>
-                        <p class="mt-1 text-sm text-yellow-700 dark:text-yellow-300">
-                            การแก้ไข JSON นี้จะส่งผลต่อการเชื่อมต่อฐานข้อมูลทั้งระบบ กรุณาตรวจสอบความถูกต้องก่อนบันทึก
-                        </p>
-                    </div>
                 </div>
             </div>
         </div>
