@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'เข้าสู่ระบบ')</title>
-    <link rel="icon" href="{{ asset('tailadmin-assets/images/favicon.ico') }}">
-    <link href="{{ asset('tailadmin/style.css') }}" rel="stylesheet">
+
+    <!-- Vite Assets -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <script>
       (function() {
         try {
@@ -21,25 +24,28 @@
     <style>
       body { min-height: 100vh; }
     </style>
-    </head>
+</head>
 <body class="bg-gray-50 dark:bg-gray-900">
   <main class="min-h-screen flex items-center justify-center">
     @yield('content')
   </main>
-  <script src="{{ asset('tailadmin/bundle.js') }}"></script>
-  <script src="{{ asset('vendor/sweetalert2/sweetalert2.all.min.js') }}"></script>
+
   @if(session('status'))
     <script>
       window.addEventListener('DOMContentLoaded', function(){
-        Swal.fire({
-          icon: 'info',
-          title: 'แจ้งเตือน',
-          text: @json(session('status')),
-          confirmButtonColor: '#3b82f6'
-        });
+        alert(@json(session('status')));
       });
     </script>
   @endif
+
+  @if(session('error'))
+    <script>
+      window.addEventListener('DOMContentLoaded', function(){
+        alert(@json(session('error')));
+      });
+    </script>
+  @endif
+
   @stack('scripts')
 </body>
 </html>
