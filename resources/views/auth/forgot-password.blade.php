@@ -48,27 +48,38 @@ async function handleForgotPassword(event) {
     event.preventDefault();
 
     const button = document.getElementById('forgotPasswordBtn');
-    auth.clearErrors('forgotPasswordForm');
-    auth.setButtonLoading(button, true);
+    const form = document.getElementById('forgotPasswordForm');
+    const formData = new FormData(form);
+
+    // Set button loading state
+    button.disabled = true;
+    button.textContent = 'Sending...';
 
     try {
-        const formData = auth.getFormData('forgotPasswordForm');
-        const response = await auth.forgotPassword(formData);
+        const response = await fetch('{{ route('forgot-password.post') }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json',
+            },
+            body: formData
+        });
 
-        if (response.success) {
-            auth.showNotification(response.message, 'success');
+        const data = await response.json();
 
+        if (data.success) {
+            alert(data.message || 'Password reset link sent to your email!');
             // Clear form
-            document.getElementById('forgotPasswordForm').reset();
+            form.reset();
+        } else {
+            throw data;
         }
     } catch (error) {
-        if (error.errors) {
-            auth.showErrors(error.errors, 'forgotPasswordForm');
-        }
-
-        auth.showNotification(error.message || 'Failed to send reset link', 'error');
+        const message = error.message || 'Failed to send reset link. Please try again.';
+        alert(message);
     } finally {
-        auth.setButtonLoading(button, false);
+        button.disabled = false;
+        button.textContent = 'Send Reset Link';
     }
 }
 </script>

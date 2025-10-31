@@ -70,29 +70,38 @@ async function handleLogin(event) {
     event.preventDefault();
 
     const button = document.getElementById('loginBtn');
-    auth.clearErrors('loginForm');
-    auth.setButtonLoading(button, true);
+    const form = document.getElementById('loginForm');
+    const formData = new FormData(form);
+
+    // Set button loading state
+    button.disabled = true;
+    button.textContent = 'Signing in...';
 
     try {
-        const formData = auth.getFormData('loginForm');
-        const response = await auth.login(formData);
+        const response = await fetch('{{ route('login.post') }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json',
+            },
+            body: formData
+        });
 
-        if (response.success) {
-            auth.showNotification(response.message, 'success');
+        const data = await response.json();
 
-            // Redirect after short delay
-            setTimeout(() => {
-                window.location.href = response.redirect;
-            }, 500);
+        if (data.success) {
+            alert(data.message || 'Login successful!');
+            // Redirect to dashboard
+            window.location.href = data.redirect || '{{ route('dashboard') }}';
+        } else {
+            throw data;
         }
     } catch (error) {
-        auth.setButtonLoading(button, false);
+        button.disabled = false;
+        button.textContent = 'Sign In';
 
-        if (error.errors) {
-            auth.showErrors(error.errors, 'loginForm');
-        }
-
-        auth.showNotification(error.message || 'Login failed', 'error');
+        const message = error.message || 'Login failed. Please check your credentials.';
+        alert(message);
     }
 }
 </script>

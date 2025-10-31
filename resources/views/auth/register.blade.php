@@ -81,29 +81,38 @@ async function handleRegister(event) {
     event.preventDefault();
 
     const button = document.getElementById('registerBtn');
-    auth.clearErrors('registerForm');
-    auth.setButtonLoading(button, true);
+    const form = document.getElementById('registerForm');
+    const formData = new FormData(form);
+
+    // Set button loading state
+    button.disabled = true;
+    button.textContent = 'Creating account...';
 
     try {
-        const formData = auth.getFormData('registerForm');
-        const response = await auth.register(formData);
+        const response = await fetch('{{ route('register.post') }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json',
+            },
+            body: formData
+        });
 
-        if (response.success) {
-            auth.showNotification(response.message, 'success');
+        const data = await response.json();
 
-            // Redirect after short delay
-            setTimeout(() => {
-                window.location.href = response.redirect;
-            }, 500);
+        if (data.success) {
+            alert(data.message || 'Account created successfully!');
+            // Redirect to dashboard
+            window.location.href = data.redirect || '{{ route('dashboard') }}';
+        } else {
+            throw data;
         }
     } catch (error) {
-        auth.setButtonLoading(button, false);
+        button.disabled = false;
+        button.textContent = 'Create Account';
 
-        if (error.errors) {
-            auth.showErrors(error.errors, 'registerForm');
-        }
-
-        auth.showNotification(error.message || 'Registration failed', 'error');
+        const message = error.message || 'Registration failed. Please try again.';
+        alert(message);
     }
 }
 </script>
