@@ -1,24 +1,34 @@
 import './bootstrap';
+import Alpine from 'alpinejs';
+import persist from '@alpinejs/persist';
+import collapse from '@alpinejs/collapse';
 
 /**
  * TailAdmin Template - Main JavaScript
  *
  * This file handles:
+ * - Alpine.js initialization
  * - Dark mode toggle
  * - Sidebar menu interactions
  * - Global utilities
  */
 
-// Dark Mode Toggle
+// Initialize Alpine.js
+Alpine.plugin(persist);
+Alpine.plugin(collapse);
+window.Alpine = Alpine;
+Alpine.start();
+
+// Dark Mode Toggle (keeping for compatibility with non-Alpine layouts)
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize dark mode from localStorage
+    // Initialize dark mode from localStorage (for non-Alpine layouts)
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark');
     } else {
         document.documentElement.classList.remove('dark');
     }
 
-    // Dark mode toggle button handler
+    // Dark mode toggle button handler (for non-Alpine layouts)
     const darkModeToggle = document.getElementById('darkModeToggle');
     if (darkModeToggle) {
         darkModeToggle.addEventListener('click', function() {

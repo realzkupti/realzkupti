@@ -21,13 +21,66 @@ class DashboardController extends Controller
             ->orderBy('sort_order')
             ->with(['children' => function($query) {
                 $query->where('is_active', true);
+                $query->orderBy('sort_order');
             }])
             ->get()
             ->filter(function($menu) use ($user) {
                 return $user->hasMenuPermission($menu->id, 'can_view');
             });
 
-        return view('dashboard', compact('menus'));
+        // Group menus by menu_group for TailAdmin sidebar
+        $userMenus = $menus->groupBy('menu_group')->map(function($groupMenus) use ($user) {
+            return $groupMenus->map(function($menu) use ($user) {
+                $menuArray = [
+                    'id' => $menu->id,
+                    'key' => $menu->key,
+                    'label' => $menu->label,
+                    'icon' => $menu->icon,
+                    'route' => $menu->route,
+                    'url' => $menu->url,
+                    'children' => []
+                ];
+
+                // Add children if they exist and user has permission
+                if ($menu->children->isNotEmpty()) {
+                    $menuArray['children'] = $menu->children
+                        ->filter(function($child) use ($user) {
+                            return $user->hasMenuPermission($child->id, 'can_view');
+                        })
+                        ->map(function($child) {
+                            return [
+                                'id' => $child->id,
+                                'key' => $child->key,
+                                'label' => $child->label,
+                                'icon' => $child->icon,
+                                'route' => $child->route,
+                                'url' => $child->url,
+                            ];
+                        })
+                        ->values()
+                        ->toArray();
+                }
+
+                return $menuArray;
+            })->values()->toArray();
+        })->toArray();
+
+        // Provide default stats data
+        $stats = [
+            'users_total' => \App\Models\User::count(),
+            'users_active' => \App\Models\User::where('is_active', true)->count(),
+            'cheques' => 0, // Will be implemented later
+            'companies_total' => 0, // Will be implemented later
+            'companies_active' => 0, // Will be implemented later
+            'views' => 0,
+            'profit' => 0,
+            'products' => 0,
+            'users' => \App\Models\User::count(),
+        ];
+
+        $activities = []; // Will be implemented later
+
+        return view('tailadmin.pages.dashboard', compact('menus', 'userMenus', 'stats', 'activities'));
     }
 
     /**
