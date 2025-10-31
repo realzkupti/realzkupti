@@ -115,12 +115,7 @@
     @if (session('status'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'สำเร็จ',
-                    text: @json(session('status')),
-                    confirmButtonColor: '#2563eb'
-                });
+                alert(@json(session('status')));
             });
         </script>
     @endif

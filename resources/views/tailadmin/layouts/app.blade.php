@@ -10,7 +10,6 @@
     <!-- Vite Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <link rel="stylesheet" href="{{ asset('vendor/sweetalert2/sweetalert2.min.css') }}">
     @stack('styles')
 </head>
 <body
@@ -59,17 +58,10 @@
     </div>
     <!-- ===== Page Wrapper End ===== -->
 
-    <script src="{{ asset('vendor/sweetalert2/sweetalert2.all.min.js') }}"></script>
-
     @if (session('forbidden'))
         <script>
             window.addEventListener('DOMContentLoaded', function(){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'ไม่มีสิทธิ์เข้าถึง',
-                    text: @json(session('forbidden')),
-                    confirmButtonColor: '#ef4444'
-                });
+                alert('ไม่มีสิทธิ์เข้าถึง: ' + @json(session('forbidden')));
             });
         </script>
     @endif
