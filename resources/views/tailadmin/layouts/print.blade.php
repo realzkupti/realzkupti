@@ -42,7 +42,7 @@
                 <div class="flex flex-grow items-center justify-between py-4 px-4 shadow-sm md:px-6 2xl:px-11">
                     <div class="flex items-center gap-2 sm:gap-4">
                         <!-- Logo -->
-                        <a class="block flex-shrink-0" href="{{ route('tailadmin.dashboard') }}">
+                        <a class="block flex-shrink-0" href="{{ route('dashboard') }}">
                             <span class="text-xl font-bold text-brand-500">{{ config('app.name') }}</span>
                         </a>
                     </div>
@@ -64,7 +64,7 @@
                         </div>
 
                         <!-- Back Button -->
-                        <a href="{{ route('tailadmin.dashboard') }}" class="flex items-center gap-2 rounded bg-brand-500 px-4 py-2 text-white hover:bg-brand-600">
+                        <a href="{{ route('dashboard') }}" class="flex items-center gap-2 rounded bg-brand-500 px-4 py-2 text-white hover:bg-brand-600">
                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                             </svg>
