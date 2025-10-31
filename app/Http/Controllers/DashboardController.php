@@ -21,7 +21,7 @@ class DashboardController extends Controller
             ->orderBy('sort_order')
             ->with(['children' => function($query) {
                 $query->where('is_active', true);
-                $query->orderBy('sort_order');
+                // Don't add orderBy here - children() relationship already has it
             }])
             ->get()
             ->filter(function($menu) use ($user) {
